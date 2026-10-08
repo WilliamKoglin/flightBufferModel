@@ -26,4 +26,4 @@ df = df.dropna(subset=["ArrDelay"])
 df = df.drop(columns=["Cancelled","Diverted"])
 
 
-print(df.head)
+print(df.head())
