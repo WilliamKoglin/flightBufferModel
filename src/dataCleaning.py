@@ -32,5 +32,6 @@ def load_and_clean(path = "./data/raw/bts_2026.parquet"):
 
     return(df.head())
 
+# debugging purposes
 if __name__ == "__main__":
     print(load_and_clean())
