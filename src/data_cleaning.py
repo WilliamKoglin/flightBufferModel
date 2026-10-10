@@ -7,7 +7,7 @@ def load_and_clean(path = "./data/raw/bts_2026.parquet"):
         # Date data known in advance
         "Month", "DayofMonth", "DayOfWeek", "CRSDepTime",
         # Airline/airport data known in advance
-        "Reporting_Airline", "Origin", "Dest", "Distance",
+        "Reporting_Airline", "Origin", "Dest",
         # Dependent variable
         "ArrDelay",
         # Used for cleaning
@@ -30,7 +30,7 @@ def load_and_clean(path = "./data/raw/bts_2026.parquet"):
     df = df.drop(columns=["Cancelled","Diverted","CRSDepTime"])
 
 
-    return(df.head())
+    return(df)
 
 # debugging purposes
 if __name__ == "__main__":
