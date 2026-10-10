@@ -1,9 +1,8 @@
 # Objective- turn clean df into values for the model
-import numpy as np
 import pandas as pd
 
 CATEGORICAL_COLS = ["Reporting_Airline", "Origin", "Dest"]
-NUMERICAL_COLS = ["Month", "DayOfWeek", "DayofMonth", "DepHour", "Distance"]
+NUMERICAL_COLS = ["Month", "DayOfWeek", "DayofMonth", "DepHour"]
 TARGET = "ArrDelay"
 
 
