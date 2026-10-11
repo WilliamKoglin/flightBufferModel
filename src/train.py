@@ -32,33 +32,23 @@ def main():
     os.makedirs(ARTIFACTS_DIR, exist_ok=True)
 
     
+    df = load_and_clean()
 
-    # 1) DATA ---------------------------------------------------------------
-    df = load_and_clean()  # your data_cleaning output (the columns you showed)
-
-   
-
-    # split BEFORE building encoders/scaler so stats come only from train data
     train_df, val_df = train_test_split(df, test_size=0.2, random_state=42)
 
-    # 2) FEATURES -----------------------------------------------------------
-    # build encoders/scaler on TRAIN, then REUSE them on VAL (consistency!)
     train_df, encoders, scaler = prepare_features(train_df)
     val_df, _, _ = prepare_features(val_df, encoders=encoders, scaler=scaler)
 
-    # 3) DATASETS / LOADERS -------------------------------------------------
     train_ds = FlightDelayDataset(train_df)
     val_ds = FlightDelayDataset(val_df)
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True)
     val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE)
 
-    # 4) MODEL --------------------------------------------------------------
     vsizes = vocab_sizes(encoders)
     model = DelayNet(vsizes, num_numeric=len(NUMERICAL_COLS), emb_dim=EMB_DIM).to(DEVICE)
     optimizer = torch.optim.Adam(model.parameters(), lr=LR)
     loss_fn = nn.L1Loss()  # MAE — in minutes, easy to interpret
 
-    # 5) TRAIN LOOP ---------------------------------------------------------
     for epoch in range(1, EPOCHS + 1):
         model.train()
         train_loss = 0.0
@@ -85,7 +75,6 @@ def main():
         # are any feature columns suspiciously correlated with the target?
         print(f"epoch {epoch:2d} | train MAE {train_loss:6.2f} min | val MAE {val_loss:6.2f} min")
 
-    # 6) EXPORT THE 3 ARTIFACTS --------------------------------------------
     torch.save(model.state_dict(), os.path.join(ARTIFACTS_DIR, "model.pt"))
 
     with open(os.path.join(ARTIFACTS_DIR, "encoders.pkl"), "wb") as f:
