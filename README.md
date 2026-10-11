@@ -55,3 +55,10 @@ Workflow generally goes as follows:
 encoders.pkl - stores encoder data
 metadata.json - stores data on model dimensions, statistics, and values
 model.pt - the pytorch model file used for predictions
+
+## Results
+- **Training data:** ~4M BTS on-time performance records
+- **Validation MAE:** ~25 min
+- **Buffer:** P90 residual margin = 51.18 min, verified at **90.0% coverage** on validation
+- **Features:** airline / origin / destination (embeddings) + month, day of week, day of month, departure hour (numeric)
+- **Artifacts:** `model.pt`, `encoders.pkl`, `metadata.json`
