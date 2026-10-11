@@ -1,1 +1,9 @@
+# raw data — never commit
+data/raw/
 *.parquet
+*.csv
+
+# python env
+venv/
+__pycache__/
+*.pyc
